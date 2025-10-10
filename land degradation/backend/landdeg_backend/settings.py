@@ -8,8 +8,11 @@ Notes:
 """
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+# Load environment variables from .env if present
+load_dotenv(BASE_DIR / ".env")
 
 # --- Core Django ---
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-insecure-secret-key-change-me")

@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .auth import firebase_login_required
 from landdeg_backend.firebase_config import get_firestore_client
+from firebase_admin import firestore
 
 
 def health(request: HttpRequest) -> JsonResponse:
