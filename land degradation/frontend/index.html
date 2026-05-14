@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Land ReGen — AI for Land Degradation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+      :root { --bg: #0b1727; --panel: #13223a; --text: #e6f0ff; --accent: #79ffa8; --muted: #9ab4d1; }
+      * { box-sizing: border-box; }
+      body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: linear-gradient(180deg, #0b1727 0%, #0e1b30 100%); color: var(--text); }
+      header { padding: 20px; display:flex; align-items:center; justify-content:space-between; }
+      header h1 { margin:0; font-size: 20px; letter-spacing: 0.4px; }
+      .pill { background: rgba(121,255,168,0.1); color: var(--accent); padding: 6px 10px; border: 1px solid rgba(121,255,168,0.4); border-radius: 999px; font-size: 12px; }
+      main { max-width: 1100px; margin: 0 auto; padding: 24px; }
+      .grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+      .card { background: var(--panel); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 16px; box-shadow: 0 6px 24px rgba(0,0,0,0.3); }
+      .card h2 { margin: 0 0 12px; font-size: 16px; color: var(--text); letter-spacing: 0.3px; }
+      label { font-size: 12px; color: var(--muted); display:block; margin: 10px 0 6px; }
+      input, textarea, select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); background: #0f1d34; color: var(--text); }
+      textarea { min-height: 100px; }
+      button { background: var(--accent); color: #003512; border: none; padding: 10px 14px; border-radius: 10px; font-weight: 700; cursor:pointer; }
+      button.secondary { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.15); }
+      .row { display:flex; gap:10px; }
+      .kpis { display:grid; grid-template-columns: repeat(3,1fr); gap:8px; margin-top: 10px; }
+      .kpi { background:#0f1d34; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; font-size:12px; color:var(--muted); }
+      .muted { color: var(--muted); font-size: 12px; }
+      .list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+      .list li { background:#0f1d34; border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:10px; }
+      footer { opacity: 0.7; font-size: 12px; padding: 30px; text-align:center; }
+      .auth { display:flex; gap:8px; align-items:center; }
+      .hidden { display:none; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>🌍 Land ReGen — AI for Land Degradation</h1>
+      <div class="auth">
+        <span id="userEmail" class="muted">Not signed in</span>
+        <button id="signInBtn" class="secondary">Sign in</button>
+        <button id="signOutBtn" class="secondary hidden">Sign out</button>
+      </div>
+    </header>
+    <main>
+      <div class="grid">
+        <section class="card">
+          <h2>Analyze Site</h2>
+          <div class="row">
+            <div style="flex:1">
+              <label>Location</label>
+              <input id="location" placeholder="e.g., Machakos County, Kenya or 1.23, 36.77" />
+            </div>
+            <div style="width:180px">
+              <label>NDVI</label>
+              <input id="ndvi" type="number" step="0.01" placeholder="0.36" />
+            </div>
+            <div style="width:180px">
+              <label>Rainfall (mm)</label>
+              <input id="rainfall" type="number" step="0.1" placeholder="12.8" />
+            </div>
+          </div>
+          <label>Observations</label>
+          <textarea id="observations" placeholder="Describe soil erosion, vegetation cover, land use, etc."></textarea>
+          <label>Goals</label>
+          <select id="goals" multiple>
+            <option>soil health</option>
+            <option>sustainable agriculture</option>
+            <option>reforestation</option>
+          </select>
+          <div class="row" style="margin-top:12px">
+            <button id="analyzeBtn">Run AI Analysis</button>
+            <button id="agrometBtn" class="secondary">Get AgroMet</button>
+          </div>
+          <p class="muted">Tip: Sign in to save analyses and view your project history.</p>
+        </section>
+        <section class="card">
+          <h2>Results</h2>
+          <pre id="result" style="white-space:pre-wrap"></pre>
+          <div class="kpis" id="kpis"></div>
+        </section>
+      </div>
+
+      <section class="card" style="margin-top:20px">
+        <h2>Your Projects</h2>
+        <ul id="projects" class="list"></ul>
+      </section>
+
+      <section class="card" style="margin-top:20px">
+        <h2>Hackathon Vibes</h2>
+        <div class="row" style="align-items:center; justify-content:space-between">
+          <span class="pill">🌱 Land ReGen Hackathon — Oct 8–13, 2025</span>
+          <a href="https://luma.com/6wl3l79i?tk=w1sp7n" target="_blank" rel="noreferrer">
+            <button class="secondary">Register</button>
+          </a>
+        </div>
+        <p class="muted" style="margin-top:8px">Bring your GIS, remote sensing, and AI skills. Build something real for the planet.</p>
+      </section>
+    </main>
+
+    <footer>
+      Built with Django + Firebase. Replace AI logic with your model at any time.
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
